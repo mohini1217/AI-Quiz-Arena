@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Timer from "../components/Timer";
@@ -6,7 +5,9 @@ import categories from "../data/categories";
 import quizData from "../data/quizData";
 import "../styles/Quiz.css";
 
-const API_URL = "http://localhost:5000";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:5000";
 
 function Quiz() {
   const { categoryId } = useParams();
@@ -30,7 +31,6 @@ function Quiz() {
 
       setFinished(true);
 
-      // Calculate the final score.
       const score = questions.reduce((total, question, index) => {
         return (
           total +
@@ -38,7 +38,6 @@ function Quiz() {
         );
       }, 0);
 
-      // Get logged-in user and authentication token.
       let currentUser = null;
 
       try {
@@ -51,7 +50,6 @@ function Quiz() {
 
       const token = localStorage.getItem("token");
 
-      // Create the quiz attempt.
       const attempt = {
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
         userKey: currentUser?.id || currentUser?.email || "guest",
@@ -75,7 +73,6 @@ function Quiz() {
         })),
       };
 
-      // Save the result locally first.
       try {
         const history = JSON.parse(
           localStorage.getItem("quizArenaHistory") || "[]"
@@ -104,10 +101,8 @@ function Quiz() {
         return;
       }
 
-      // Open the result page immediately.
       navigate(`/result/${attempt.id}`, { replace: true });
 
-      // Save the result in MongoDB for logged-in users.
       if (!token) {
         console.warn(
           "MongoDB save skipped: no login token was found. The result is saved locally."
@@ -159,7 +154,6 @@ function Quiz() {
     [category, questions, navigate, finished]
   );
 
-  // Redirect if the category or questions do not exist.
   useEffect(() => {
     if (!category || questions.length === 0) {
       navigate("/dashboard", { replace: true });
@@ -328,4 +322,3 @@ function Quiz() {
 }
 
 export default Quiz;
-

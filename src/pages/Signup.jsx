@@ -3,6 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import "../styles/Signup.css";
 
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:5000";
+
 function Signup() {
   const navigate = useNavigate();
 
@@ -61,13 +65,17 @@ function Signup() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/signup",
+        `${API_URL}/api/auth/signup`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, email, password }),
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+          }),
         }
       );
 
@@ -81,11 +89,10 @@ function Signup() {
       setError(
         "Account created successfully! Please log in using your email and password."
       );
+
       navigate("/login");
     } catch {
-      setError(
-        "Cannot connect to the server. Please check whether the backend is running."
-      );
+      setError("Cannot connect to the server. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -103,7 +110,7 @@ function Signup() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/google",
+        `${API_URL}/api/auth/google`,
         {
           method: "POST",
           headers: {
@@ -129,9 +136,7 @@ function Signup() {
 
       saveLogin(data);
     } catch {
-      setError(
-        "Cannot connect to the server. Please check whether the backend is running."
-      );
+      setError("Cannot connect to the server. Please try again.");
     } finally {
       setLoading(false);
     }

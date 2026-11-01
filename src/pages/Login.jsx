@@ -1,8 +1,11 @@
-
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import "../styles/Login.css";
+
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:5000";
 
 function Login() {
   const navigate = useNavigate();
@@ -31,7 +34,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/login",
+        `${API_URL}/api/auth/login`,
         {
           method: "POST",
           headers: {
@@ -54,7 +57,7 @@ function Login() {
       saveLogin(data);
     } catch {
       setError(
-        "Cannot connect to the server. Please check whether the backend is running."
+        "Cannot connect to the server. Please try again."
       );
     } finally {
       setLoading(false);
@@ -73,7 +76,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/google",
+        `${API_URL}/api/auth/google`,
         {
           method: "POST",
           headers: {
@@ -99,9 +102,7 @@ function Login() {
 
       saveLogin(data);
     } catch {
-      setError(
-        "Cannot connect to the server. Please check whether the backend is running."
-      );
+      setError("Cannot connect to the server. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -217,4 +218,3 @@ function Login() {
 }
 
 export default Login;
-
