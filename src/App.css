@@ -1,0 +1,89 @@
+/* Main Application Layout */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #100b24;
+  color: #ffffff;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+}
+
+/* Global Elements */
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+/* Not Found Page */
+
+.not-found {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 30px;
+  text-align: center;
+}
+
+.not-found h1 {
+  font-size: 5rem;
+  font-weight: 800;
+  color: #a78bfa;
+}
+
+.not-found h2 {
+  font-size: 1.8rem;
+  color: #ffffff;
+}
+
+.not-found a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.not-found a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px #8b5cf655;
+}
+
+/* Responsive Design */
+
+@media (max-width: 600px) {
+  .app-main {
+    width: 100%;
+  }
+
+  .not-found h1 {
+    font-size: 4rem;
+  }
+
+  .not-found h2 {
+    font-size: 1.4rem;
+  }
+}
